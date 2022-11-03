@@ -11,17 +11,49 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { increment, decrement } from "./Redux/counter/actions";
 import ModalBackground from "./ModalBackground";
-import {
-  blueBack,
-  yellowBack,
-  pinkBack,
-  greenBack,
-} from "./Redux/background/actions";
 
 export default function Counter() {
   const [modalVisible, setModalVisible] = useState(false);
 
   const background = useSelector((state) => state.background.background);
+
+  let colorBackground = background;
+
+  let mainColor;
+  let secColor;
+
+  const handlerColorBackground = () => {
+    switch (colorBackground) {
+      case "https://img.freepik.com/premium-vector/cute-pattern-with-cats-blue-checkered-background-vector-seamless-texture-kids-fabric-wrapping-paper-design_562639-607.jpg":
+        return (colorBackground = "azul");
+      case "https://data.whicdn.com/images/272112429/original.jpg":
+        return (colorBackground = "amarillo");
+      case "https://www.todofondos.net/wp-content/uploads/1511x854-Cat-Wallpaper-Tumblr-768x434.png":
+        return (colorBackground = "rosa");
+      case "https://img.freepik.com/premium-vector/seamless-pattern-with-cute-white-cat-face-with-ice-cream-cartoon-flat-design-green-background_40564-669.jpg":
+        return (colorBackground = "verde");
+      default:
+        return (colorBackground = "rosa");
+    }
+  };
+
+  const handlerColores = () => {
+    switch (colorBackground) {
+      case "azul":
+        return (mainColor = "#309bb0"), (secColor = "#73d7e2");
+      case "amarillo":
+        return (mainColor = "#d87341"), (secColor = "#e2a573");
+      case "rosa":
+        return (mainColor = "#e273b8"), (secColor = "#ea99cb");
+      case "verde":
+        return (mainColor = "#48b030"), (secColor = "#8cd841");
+      default:
+        return (mainColor = "#e273b8"), (secColor = "#e29e73");
+    }
+  };
+
+  handlerColorBackground();
+  handlerColores();
 
   const handleOpenModal = () => {
     setModalVisible(!modalVisible);
@@ -53,28 +85,39 @@ export default function Counter() {
     >
       <View style={styles.container}>
         <StatusBar />
-        <Text style={styles.title_text}>Contador</Text>
+        <Text style={{ ...styles.title_text, color: mainColor }}>Contador</Text>
         <View style={styles.countContainer}>
-          <Text style={styles.counter_text}>{count}</Text>
+          <Text style={{ ...styles.counter_text, color: mainColor }}>
+            {count}
+          </Text>
         </View>
         <View style={styles.botonera}>
-          <TouchableOpacity onPress={handleIncrement} style={styles.btn}>
+          <TouchableOpacity
+            onPress={handleIncrement}
+            style={{ ...styles.btn, backgroundColor: mainColor }}
+          >
             <Text style={styles.btn_text}>Sumar</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={handleDecrement}
-            style={{ ...styles.btn, backgroundColor: "#e29e73" }}
+            style={{ ...styles.btn, backgroundColor: secColor }}
           >
             <Text style={styles.btn_text}> Restar </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={handleOpenModal}
-            style={{ ...styles.btn, backgroundColor: "#e29e73" }}
+            style={{ ...styles.btn, backgroundColor: mainColor }}
           >
             <Text style={styles.btn_text}> Cambiar fondo </Text>
           </TouchableOpacity>
         </View>
-        {modalVisible && <ModalBackground toggleModal={handleOpenModal} />}
+        {modalVisible && (
+          <ModalBackground
+            toggleModal={handleOpenModal}
+            mainColor={mainColor}
+            secColor={mainColor}
+          />
+        )}
       </View>
     </ImageBackground>
   );
@@ -142,7 +185,6 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
     borderRadius: 10,
-    backgroundColor: "#e273b8",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

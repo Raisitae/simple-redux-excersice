@@ -56,20 +56,32 @@ export default function ModalBackground({ toggleModal }) {
     >
       <View style={style.container}>
         <View style={style.card}>
-          <TouchableOpacity style={style.button} onPress={handleBlue}>
+          <TouchableOpacity
+            style={{ ...style.button, backgroundColor: "#d3d2cf" }}
+            onPress={handleBlue}
+          >
             <Text style={style.btn_text}>Azul</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={style.button} onPress={handleGreen}>
+          <TouchableOpacity
+            style={{ ...style.button, backgroundColor: "#d3d2cf" }}
+            onPress={handleGreen}
+          >
             <Text style={style.btn_text}>Verde</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={style.button} onPress={handlePink}>
+          <TouchableOpacity
+            style={{ ...style.button, backgroundColor: "#d3d2cf" }}
+            onPress={handlePink}
+          >
             <Text style={style.btn_text}>Rosa</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={style.button} onPress={handleYellow}>
+          <TouchableOpacity
+            style={{ ...style.button, backgroundColor: "#d3d2cf" }}
+            onPress={handleYellow}
+          >
             <Text style={style.btn_text}>Amarillo</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{ ...style.button, backgroundColor: "#e29e73" }}
+            style={{ ...style.button, backgroundColor: "#a09f9c" }}
             onPress={toggleIt}
           >
             <Text style={style.btn_text}>Cerrar</Text>
@@ -83,7 +95,6 @@ export default function ModalBackground({ toggleModal }) {
 const style = StyleSheet.create({
   button: {
     backgroundColor: "#e273b8",
-
     padding: 10,
     marginHorizontal: 10,
     marginVertical: 5,
