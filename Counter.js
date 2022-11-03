@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,12 +6,27 @@ import {
   View,
   StatusBar,
   ImageBackground,
-  Dimensions,
 } from "react-native";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { increment, decrement } from "./Redux/actions";
+import { increment, decrement } from "./Redux/counter/actions";
+import ModalBackground from "./ModalBackground";
+import {
+  blueBack,
+  yellowBack,
+  pinkBack,
+  greenBack,
+} from "./Redux/background/actions";
 
 export default function Counter() {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const background = useSelector((state) => state.background.background);
+
+  const handleOpenModal = () => {
+    setModalVisible(!modalVisible);
+  };
+
   const dispatch = useDispatch();
 
   const count = useSelector((state) => state.count.count);
@@ -27,7 +42,7 @@ export default function Counter() {
   return (
     <ImageBackground
       source={{
-        uri: "https://www.todofondos.net/wp-content/uploads/1511x854-Cat-Wallpaper-Tumblr-768x434.png",
+        uri: background,
       }}
       style={styles.containerImage}
       imageStyle={{
@@ -44,7 +59,7 @@ export default function Counter() {
         </View>
         <View style={styles.botonera}>
           <TouchableOpacity onPress={handleIncrement} style={styles.btn}>
-            <Text style={styles.btn_text}> Sumar </Text>
+            <Text style={styles.btn_text}>Sumar</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={handleDecrement}
@@ -52,7 +67,14 @@ export default function Counter() {
           >
             <Text style={styles.btn_text}> Restar </Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleOpenModal}
+            style={{ ...styles.btn, backgroundColor: "#e29e73" }}
+          >
+            <Text style={styles.btn_text}> Cambiar fondo </Text>
+          </TouchableOpacity>
         </View>
+        {modalVisible && <ModalBackground toggleModal={handleOpenModal} />}
       </View>
     </ImageBackground>
   );
@@ -68,6 +90,8 @@ const styles = StyleSheet.create({
   },
   botonera: {
     flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
   },
   containerImage: {
     flexDirection: "row",
@@ -115,10 +139,10 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   btn: {
-    backgroundColor: "#e273b8",
     padding: 10,
     margin: 10,
     borderRadius: 10,
+    backgroundColor: "#e273b8",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
